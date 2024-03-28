@@ -1,9 +1,13 @@
 [package]
 name = "braille-rs"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+description = "Simple crate for working with braille characters and drawing with them."
+readme = "README.md"
+homepage = "https://github.com/mzntori/braille-rs"
+repository = "https://github.com/mzntori/braille-rs"
+license = "MIT"
+keywords = ["braille"]
 
 [dependencies]
 thiserror = "1.0.58"
