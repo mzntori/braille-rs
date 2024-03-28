@@ -87,8 +87,7 @@ impl BrailleChar {
             Ok(())
         } else {
             Err(IndexError::USizeMatrix(2, 4, x, y))
-        }
-
+        };
     }
 
     /// Sets all points.
@@ -106,7 +105,7 @@ impl BrailleChar {
             Ok(())
         } else {
             Err(IndexError::USizeMatrix(2, 4, x, y))
-        }
+        };
     }
 
     /// Resets all points.
@@ -124,7 +123,7 @@ impl BrailleChar {
             Ok(())
         } else {
             Err(IndexError::USizeMatrix(2, 4, x, y))
-        }
+        };
     }
 
     /// Flips all points.
