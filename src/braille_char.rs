@@ -56,7 +56,7 @@ impl BrailleChar {
     ///
     /// `(6) (7)`
     ///
-    /// Meaning `0b00111010` would result in
+    /// Meaning `0b00111010` would result in ⠺
     ///
     pub fn set_data(&mut self, data: u32) {
         self.data = data;
