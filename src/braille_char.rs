@@ -4,6 +4,10 @@ use std::ops::Not;
 use crate::error::IndexError;
 
 
+pub(crate) const BYTE_MASK: [u32; 8] = [1, 2, 4, 64, 8, 16, 32, 128];
+pub(crate) const BYTE_MASK_INVERTED: [u32; 8] = [!1, !2, !4, !64, !8, !16, !32, !128];
+
+
 /// Represents a braille character.
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct BrailleChar {
@@ -12,9 +16,6 @@ pub struct BrailleChar {
 
 
 impl BrailleChar {
-    const VALUES: [u32; 8] = [1, 2, 4, 64, 8, 16, 32, 128];
-    const VALUES_INVERTED: [u32; 8] = [!1, !2, !4, !64, !8, !16, !32, !128];
-
     /// Creates a new braille character that is blank.
     pub fn new() -> Self {
         BrailleChar {
@@ -83,7 +84,7 @@ impl BrailleChar {
         let i = y + 4 * x;
 
         return if i < 8 {
-            self.or_data(BrailleChar::VALUES[y + 4 * x]);
+            self.or_data(BYTE_MASK[y + 4 * x]);
             Ok(())
         } else {
             Err(IndexError::USizeMatrix(2, 4, x, y))
@@ -101,7 +102,7 @@ impl BrailleChar {
         let i = y + 4 * x;
 
         return if i < 8 {
-            self.and_data(BrailleChar::VALUES_INVERTED[y + 4 * x]);
+            self.and_data(BYTE_MASK_INVERTED[y + 4 * x]);
             Ok(())
         } else {
             Err(IndexError::USizeMatrix(2, 4, x, y))
@@ -119,7 +120,7 @@ impl BrailleChar {
         let i = y + 4 * x;
 
         return if i < 8 {
-            self.xor_data(BrailleChar::VALUES[y + 4 * x]);
+            self.xor_data(BYTE_MASK[y + 4 * x]);
             Ok(())
         } else {
             Err(IndexError::USizeMatrix(2, 4, x, y))

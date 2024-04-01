@@ -1,7 +1,10 @@
 use std::cmp::min;
 use std::fmt::Display;
 
-use crate::error::IndexError;
+use crate::{
+    error::IndexError,
+    braille_char::{BYTE_MASK, BYTE_MASK_INVERTED}
+};
 
 
 /// Represents a Canvas that is drawn by braille characters.
@@ -16,9 +19,6 @@ pub struct Canvas {
 
 
 impl Canvas {
-    const VALUES: [u32; 8] = [1, 2, 4, 64, 8, 16, 32, 128];
-    const VALUES_INVERTED: [u32; 8] = [!1, !2, !4, !64, !8, !16, !32, !128];
-
     /// Returns the index of `self.data` the given xy-coords lie in.
     /// Returns `None` if out of range.
     fn coords_to_index(&self, x: usize, y: usize) -> Option<usize> {
@@ -64,7 +64,7 @@ impl Canvas {
     /// If coordinates are out of range returns an `IndexError` otherwise `OK()`.
     pub fn flip(&mut self, x: usize, y: usize) -> Result<(), IndexError> {
         return if let Some(i) = self.coords_to_index(x, y) {
-            self.data[i] ^= Canvas::VALUES[(y % 4) + (x % 2) * 4];
+            self.data[i] ^= BYTE_MASK[(y % 4) + (x % 2) * 4];
 
             Ok(())
         } else {
@@ -76,7 +76,7 @@ impl Canvas {
     /// If coordinates are out of range returns an `IndexError` otherwise `OK()`.
     pub fn reset(&mut self, x: usize, y: usize) -> Result<(), IndexError> {
         return if let Some(i) = self.coords_to_index(x, y) {
-            self.data[i] &= Canvas::VALUES_INVERTED[(y % 4) + (x % 2) * 4];
+            self.data[i] &= BYTE_MASK_INVERTED[(y % 4) + (x % 2) * 4];
 
             Ok(())
         } else {
@@ -93,7 +93,7 @@ impl Canvas {
     /// If coordinates are out of range returns an `IndexError` otherwise `OK()`.
     pub fn set(&mut self, x: usize, y: usize) -> Result<(), IndexError> {
         return if let Some(i) = self.coords_to_index(x, y) {
-            self.data[i] |= Canvas::VALUES[(y % 4) + (x % 2) * 4];
+            self.data[i] |= BYTE_MASK[(y % 4) + (x % 2) * 4];
 
             Ok(())
         } else {
