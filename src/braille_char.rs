@@ -4,6 +4,16 @@ use std::ops::Not;
 use crate::error::IndexError;
 
 
+/// Index to dot table:
+///
+/// `(0) (3)`
+///
+/// `(1) (4)`
+///
+/// `(2) (5)`
+///
+/// `(6) (7)`
+///
 pub(crate) const BYTE_MASK: [u32; 8] = [1, 2, 4, 64, 8, 16, 32, 128];
 pub(crate) const BYTE_MASK_INVERTED: [u32; 8] = [!1, !2, !4, !64, !8, !16, !32, !128];
 
